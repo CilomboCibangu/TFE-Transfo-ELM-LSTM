@@ -4,38 +4,44 @@ This repository contains the MATLAB and Python codes associated with the final-y
 
 **Detection and classification of anomalies in an oil-immersed power transformer using ELM and LSTM**
 
-## MATLAB codes
+---
 
-### `ThermalIEC_3PH_OFAF.m`
-Three-phase thermal model inspired by IEC 60076-7 for an OFAF oil-immersed power transformer.
+## Project overview
 
-Main outputs:
-- top-oil temperature
-- winding temperatures of phases A, B and C
+The project combines:
+- physics-informed thermal modeling of an OFAF oil-immersed power transformer,
+- automated dataset generation from Simulink simulations,
+- feature-based preprocessing for ELM,
+- sequence-based preprocessing for LSTM,
+- training and evaluation of ELM and LSTM models for anomaly detection and classification.
 
-Main inputs:
-- RMS phase currents
-- ambient temperature
-- pump degradation factor
-- fan degradation factor
+The targeted classes are:
 
-This file is used as the thermal core for anomaly simulation.
+- **CL0**: Normal
+- **CL1**: Overload
+- **CL2**: Unbalance Phase A
+- **CL3**: Unbalance Phase B
+- **CL4**: Unbalance Phase C
+- **CL5**: Fan fault
+- **CL6**: Pump fault
 
-### `simulation_generation_dataset.m`
-Automated MATLAB/Simulink script for generating the final raw dataset.
+---
 
-Main tasks:
-- simulate the 7 operating classes
-- vary load, temperature, power factor and fault parameters
-- export SCADA signals to CSV
-- generate `index.csv` and `scenarios.mat`
+## Repository structure
 
-Expected output:
-- 504 raw CSV files
-- indexed scenario table
-- full scenario metadata
-
-## Notes
-- The Simulink model name used in the script is `FUNA_ACTUALISE`
-- The dataset generation process is based on physically coherent thermal and electrical behavior
-- This repository is part of an academic final-year project in electrical engineering
+```text
+TFE-Transfo-ELM-LSTM/
+│
+├── README.md
+├── matlab/
+│   ├── ThermalIEC_3PH_OFAF.m
+│   └── simulation_generation_dataset.m
+│
+├── python/
+│   ├── preprocessing_elm.py
+│   ├── train_elm.py
+│   ├── preprocessing_lstm.py
+│   └── train_lstm.py
+│
+└── models/
+    └── best_lstm.keras   (generated after training)
